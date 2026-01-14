@@ -71,11 +71,47 @@ if __name__ == "__main__":
     print(f"--- Successfully saved to: {filename_parquet} ---")
 
 
-def quality_check(df):
-    if df.empty:
-        print("CRITICAL: Dataframe is empty!")
-        return False
-    if df['temp_celsius'].isnull().any():
-        print("WARNING: Found missing temperatures!")
-    print(f"Quality Check Passed: {len(df)} records verified.")
-    return True
+    def quality_check(df):
+        if df.empty:
+            print("CRITICAL: Dataframe is empty!")
+            return False
+        if df['temp_celsius'].isnull().any():
+            print("WARNING: Found missing temperatures!")
+        print(f"Quality Check Passed: {len(df)} records verified.")
+        return True
+    
+    def validate_data(file_path):
+        df = pd.read_parquet(file_path)
+        
+        # 1. Check if we have all 5 cities
+        city_count = df['city'].nunique()
+        
+        # 2. Check for missing values
+        missing_temps = df['temp'].isnull().sum()
+        
+        if city_count == 5 and missing_temps == 0:
+            print("✅ DATA QUALITY PASS: All cities present, no missing data.")
+        else:
+            print(f"❌ DATA QUALITY FAIL: Cities: {city_count}/5, Missing: {missing_temps}")
+    
+    # Run the check after saving
+    validate_data(filename_parquet)
+    
+    
+    
+    # --- DATABASE SYNC SECTION ---
+    print("--- Starting Database Sync Check ---")
+    DB_URL = os.getenv('SUPABASE_DB_URL')
+    
+    if DB_URL:
+        print("✅ Found Database URL, attempting to connect...")
+        try:
+            engine = create_engine(DB_URL)
+            df.to_sql('weather_history', engine, if_exists='append', index=False)
+            print("🚀 DATABASE SUCCESS: Data pushed to Supabase!")
+        except Exception as e:
+            print(f"❌ DATABASE ERROR: {e}")
+    else:
+        print("⚠️ DATABASE SKIPPED: The environment variable SUPABASE_DB_URL is empty or missing.")
+    
+    print(f"--- Pipeline Finished: {datetime.now()} ---")    # --- END OF PIPELINE ---
