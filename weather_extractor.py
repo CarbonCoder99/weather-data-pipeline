@@ -4,10 +4,14 @@ import os
 import time
 from datetime import datetime
 import pandas as pd
+from sqlalchemy import create_engine
 
 # CONFIGURATION
 #OpenWeatherMap API key
-API_KEY = "b26f75bdebdc6d8d6f1246b772464fa0" 
+API_KEY = os.getenv('API_KEY')
+
+if not API_KEY:
+    raise ValueError("No API_KEY found! The pipeline cannot run.")
 
 # List of 5 cities you want to track
 CITIES = ["Lagos", "London", "New York", "Tokyo", "Nairobi"]
@@ -79,7 +83,7 @@ if __name__ == "__main__":
             print("WARNING: Found missing temperatures!")
         print(f"Quality Check Passed: {len(df)} records verified.")
         return True
-    
+
     def validate_data(file_path):
         df = pd.read_parquet(file_path)
         
@@ -87,22 +91,22 @@ if __name__ == "__main__":
         city_count = df['city'].nunique()
         
         # 2. Check for missing values
-        missing_temps = df['temp'].isnull().sum()
+        missing_temps = df['temp_celsius'].isnull().sum()
         
         if city_count == 5 and missing_temps == 0:
             print("✅ DATA QUALITY PASS: All cities present, no missing data.")
         else:
             print(f"❌ DATA QUALITY FAIL: Cities: {city_count}/5, Missing: {missing_temps}")
-    
+
     # Run the check after saving
     validate_data(filename_parquet)
-    
-    
-    
+
+
+
     # --- DATABASE SYNC SECTION ---
     print("--- Starting Database Sync Check ---")
     DB_URL = os.getenv('SUPABASE_DB_URL')
-    
+
     if DB_URL:
         print("✅ Found Database URL, attempting to connect...")
         try:
