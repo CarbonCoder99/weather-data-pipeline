@@ -1,5 +1,7 @@
-requests
 pandas
 pyarrow
+openmeteo-requests
+requests-cache
+retry-requests
 sqlalchemy
 psycopg2-binary
