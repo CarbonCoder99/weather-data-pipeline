@@ -1,0 +1,37 @@
+[
+    {
+        "city": "Lagos",
+        "temp_celsius": 26.91,
+        "humidity": 82,
+        "description": "overcast clouds",
+        "timestamp": "2026-01-14T22:11:35.235970"
+    },
+    {
+        "city": "London",
+        "temp_celsius": 9.04,
+        "humidity": 92,
+        "description": "broken clouds",
+        "timestamp": "2026-01-14T22:11:36.647442"
+    },
+    {
+        "city": "New York",
+        "temp_celsius": 9.1,
+        "humidity": 59,
+        "description": "overcast clouds",
+        "timestamp": "2026-01-14T22:11:38.082571"
+    },
+    {
+        "city": "Tokyo",
+        "temp_celsius": 3.8,
+        "humidity": 45,
+        "description": "clear sky",
+        "timestamp": "2026-01-14T22:11:39.544870"
+    },
+    {
+        "city": "Nairobi",
+        "temp_celsius": 15.24,
+        "humidity": 66,
+        "description": "few clouds",
+        "timestamp": "2026-01-14T22:11:40.968661"
+    }
+]
