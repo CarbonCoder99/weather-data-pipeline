@@ -2,7 +2,7 @@ from sqlalchemy import create_engine
 
 # Try the new password here
 # Note the 'postgresql' at the start!
-DB_URI = "postgresql://postgres:vsOHLeWizGp6eYer@db.mmbuabemfkxdavsaaccq.supabase.co:5432/postgres"
+DB_URI = "postgresql://postgres:WeatherData2026@db.mbuabemfkxdavsaaccq.supabase.co:5432/postgres"
 
 try:
     engine = create_engine(DB_URI)
