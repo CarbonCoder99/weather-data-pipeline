@@ -18,11 +18,14 @@ jobs:
           python-version: '3.11'
 
       - name: Install dependencies
-        run: pip install requests pandas pyarrow
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
 
       - name: Run Weather Script
         env:
           API_KEY: ${{ secrets.OPENWEATHER_API_KEY }}
+          SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
         run: python weather_extractor.py
 
       - name: Commit and Push Parquet File
@@ -31,4 +34,5 @@ jobs:
           git config --local user.name "GitHub Action"
           git add data/*.parquet
           git commit -m "Auto-update weather data" || exit 0
-          git push
+          git 
+      
