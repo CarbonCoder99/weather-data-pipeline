@@ -13,7 +13,7 @@ The pipeline follows a modern "Cloud-Native" ETL pattern:
 
 
 ## 🛠️ Tech Stack
-* **Language:** Python 3.x
+* **Language:** Python 3.13.5
 * **Data Processing:** Pandas, PyArrow
 * **Database:** PostgreSQL (Supabase)
 * **Infrastructure:** Docker, Docker-Compose
