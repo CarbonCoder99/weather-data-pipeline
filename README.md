@@ -29,7 +29,15 @@ The pipeline follows a modern "Cloud-Native" ETL pattern:
 ## 📊 Live Dashboard
 You can view the live weather trends here: https://lookerstudio.google.com/reporting/bad49e74-8b03-420f-a933-629b76a05b7d
 
+<img width="1259" height="914" alt="image" src="https://github.com/user-attachments/assets/5584cded-e5c2-4806-8549-a2fdb088961d" />
+
+
 ## 🔧 How to Run Locally
 1. Clone the repo: `git clone https://github.com/CarbonCoder99/weather-data-pipeline`
 2. Set up your environment variables in a `.env` file.
 3. Run via Docker: `docker-compose up`
+
+
+
+
+<img width="1918" height="895" alt="image" src="https://github.com/user-attachments/assets/3bcce602-21e7-4f31-8c7b-5758b6299cdd" />
