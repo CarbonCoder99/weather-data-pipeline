@@ -4,7 +4,7 @@ services:                # A list of the "apps" we want to run (we only have one
     build: .             # Look in the current folder (.) for the Dockerfile to build the image.
     container_name: collector_job  # Give the running container a friendly name.
     
-    volumes:             # This is the "Tunnel" we talked about!
+    volumes:             
       - ./data:/app/data # Map the "data" folder on your Windows PC to the "app/data" folder inside Docker.
     
     environment:         # This is the "Safe" way to pass your API key.
