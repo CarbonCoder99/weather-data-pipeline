@@ -7,6 +7,7 @@ import pandas as pd
 from sqlalchemy import create_engine
 
 # CONFIGURATION
+
 #OpenWeatherMap API key
 API_KEY = os.getenv('API_KEY')
 
@@ -17,7 +18,7 @@ if not API_KEY:
 CITIES = ["Lagos", "London", "New York", "Tokyo", "Nairobi"]
 
 def fetch_weather_data(city_name):
-    # We update the URL dynamically for each city
+    # Update the URL dynamically for each city
     url = f"http://api.openweathermap.org/data/2.5/weather?q={city_name}&appid={API_KEY}&units=metric"
     
     try:
