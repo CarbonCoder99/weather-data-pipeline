@@ -7,6 +7,6 @@ services:                # A list of the "apps" we want to run (we only have one
     volumes:             
       - ./data:/app/data # Map the "data" folder on your Windows PC to the "app/data" folder inside Docker.
 
-    environment:         # This is the "Safe" way to pass your API key.
+    # environment:         # This is the "Safe" way to pass your API key.
       - API_KEY=b26f75bdebdc6d8d6f1246b772464fa0  # Injected directly into Python's memory so it's not hard-coded in the script.
       - SUPABASE_DB_URL=postgresql://postgres:WeatherData2026@db.mmbuabemfkxdavsaaccq.supabase.co:5432/postgres

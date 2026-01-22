@@ -5,8 +5,12 @@ import time
 from datetime import datetime
 import pandas as pd
 from sqlalchemy import create_engine
+from dotenv import load_dotenv
 
 # CONFIGURATION
+
+load_dotenv()  # Load environment variables from a .env file
+
 
 #OpenWeatherMap API key
 API_KEY = os.getenv('API_KEY')
