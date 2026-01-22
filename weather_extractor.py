@@ -17,32 +17,30 @@ if not API_KEY:
 # List of 5 cities you want to track
 CITIES = ["Lagos", "London", "New York", "Tokyo", "Nairobi"]
 
-def fetch_weather_data(city_name):
-    # Update the URL dynamically for each city
-    url = f"http://api.openweathermap.org/data/2.5/weather?q={city_name}&appid={API_KEY}&units=metric"
-    
-    try:
-        response = requests.get(url, timeout=10)
-        response.raise_for_status()
-        data = response.json()
+def main():
+
+    def fetch_weather_data(city_name):
+        # Update the URL dynamically for each city
+        url = f"http://api.openweathermap.org/data/2.5/weather?q={city_name}&appid={API_KEY}&units=metric"
         
-        weather_summary = {
-            "city": data.get("name"),
-            "temp_celsius": data["main"].get("temp"),
-            "humidity": data["main"].get("humidity"),
-            "description": data["weather"][0].get("description"),
-            "timestamp": datetime.now().isoformat()
-        }
-        return weather_summary
+        try:
+            response = requests.get(url, timeout=10)
+            response.raise_for_status()
+            data = response.json()
+            
+            weather_summary = {
+                "city": data.get("name"),
+                "temp_celsius": data["main"].get("temp"),
+                "humidity": data["main"].get("humidity"),
+                "description": data["weather"][0].get("description"),
+                "timestamp": datetime.now().isoformat()
+            }
+            return weather_summary
 
-    except Exception as err:
-        print(f"Error fetching {city_name}: {err}")
-        return None
+        except Exception as err:
+            print(f"Error fetching {city_name}: {err}")
+            return None
 
-
-
-
-if __name__ == "__main__":
     all_weather_data = []
 
     print(f"--- Starting Daily Extraction: {datetime.now()} ---")
@@ -69,12 +67,11 @@ if __name__ == "__main__":
     # 3. Convert to DataFrame and save
     with open(file_in_json, "w") as f:
         json.dump(all_weather_data, f, indent=4)
-    
+
     df = pd.DataFrame(all_weather_data)
     df.to_parquet(filename_parquet, engine='pyarrow', index=False)
 
     print(f"--- Successfully saved to: {filename_parquet} ---")
-
 
     def quality_check(df):
         if df.empty:
@@ -87,22 +84,21 @@ if __name__ == "__main__":
 
     def validate_data(file_path):
         df = pd.read_parquet(file_path)
-        
+
         # 1. Check if we have all 5 cities
         city_count = df['city'].nunique()
-        
+
         # 2. Check for missing values
         missing_temps = df['temp_celsius'].isnull().sum()
-        
+
         if city_count == 5 and missing_temps == 0:
-            print("✅ DATA QUALITY PASS: All cities present, no missing data.")
+                print("✅ DATA QUALITY PASS: All cities present, no missing data.")
         else:
             print(f"❌ DATA QUALITY FAIL: Cities: {city_count}/5, Missing: {missing_temps}")
 
+
     # Run the check after saving
     validate_data(filename_parquet)
-
-
 
     # --- DATABASE SYNC SECTION ---
     print("--- Starting Database Sync Check ---")
@@ -118,5 +114,15 @@ if __name__ == "__main__":
             print(f"❌ DATABASE ERROR: {e}")
     else:
         print("⚠️ DATABASE SKIPPED: The environment variable SUPABASE_DB_URL is empty or missing.")
-    
-    print(f"--- Pipeline Finished: {datetime.now()} ---")    # --- END OF PIPELINE ---
+
+    print(f"--- Pipeline Finished: {datetime.now()} ---")    
+
+    # --- END OF PIPELINE ---
+
+
+if __name__ == "__main__":
+    main()
+
+
+
+
